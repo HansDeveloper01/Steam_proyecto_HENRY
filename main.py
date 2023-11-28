@@ -10,6 +10,15 @@ def index():
 
 @app.get("/PlayTimeGenre/{genero}")
 async def PlayTimeGenre(genero: str):
+    """
+    Recibe un género (str) y devuelve el año de lanzamiento con más horas jugadas
+    * Un ejemplo de respuesta a esta solicitud sería:
+
+        ```
+        {
+            "Año de lanzamiento con más horas jugadas para Acción": 2000
+        }
+    """
     # Leemos el archivo parquet
     df_genero = pd.read_parquet("Data/endpoint_1")
 
@@ -24,6 +33,28 @@ async def PlayTimeGenre(genero: str):
 
 @app.get("/UserForGenre/{genero}")
 async def UserForGenre(genero: str):
+    """
+    Recibe un género y devuelve el usuario con más horas jugadas, junto al acumulado de horas por año.
+        ```
+    * La respuesta a esta solicitud sería:
+
+        ```
+        {
+            "Usuario con más horas jugadas para Acción": 1234567890,
+            "Horas jugadas": [
+                {
+                    "Año": 2000,
+                    "Horas": 100
+                },
+                {
+                    "Año": 2001,
+                    "Horas": 200
+                },
+                ...
+            ]
+        }
+        
+    """
     # Leer el archivo Parquet
     df_endpoint_2 = pd.read_parquet("Data/endpoint_2")
 
@@ -52,6 +83,25 @@ async def UserForGenre(genero: str):
 
 @app.get("/UsersRecommend/{year}")
 async def UsersRecommend(year: int):
+    """
+    Recibe un año y devuelve los 3 juegos más recomendados por los usuarios australianos en el año especificado.
+
+        La respuesta a esta solicitud sería:
+
+            ```
+            [
+                {
+                    "Puesto 1": "Elden Ring"
+                },
+                {
+                    "Puesto 2": "God of War Ragnarök"
+                },
+                {
+                    "Puesto 3": "Starfield"
+                }
+            ]
+            
+    """
     # Leemos el archivo de consulta.
     df = pd.read_parquet("Data/df_australian_user_reviews")
 
@@ -84,6 +134,24 @@ async def UsersRecommend(year: int):
 
 @app.get("/UsersWorstDeveloper/{year}")
 async def UsersWorstDeveloper(year: int):
+    """
+    Recibe un año y devuelve las 3 desarrolladoras con más juegos con reseñas negativas en el año especificado.
+
+        La respuesta a esta solicitud sería:
+            ```
+            [
+                {
+                    "Puesto 1": "Ubisoft"
+                },
+                {
+                    "Puesto 2": "EA"
+                },
+                {
+                    "Puesto 3": "Activision Blizzard"
+                }
+            ]
+            
+    """
     # Leemos el archivo de consulta
     df = pd.read_parquet("Data/df_australian_user_reviews")
 
@@ -112,6 +180,20 @@ async def UsersWorstDeveloper(year: int):
 
 @app.get("/sentiment_analysis/{empresa_desarrolladora}")
 async def sentiment_analysis(empresa_desarrolladora: str):
+    """
+    Recibe un desarrollador y devuelve un resumen del análisis de sentimiento de los juegos de una desarrolladora específica.
+
+        La respuesta a esta solicitud sería:
+            ```
+            {
+                "Ubisoft": [
+                    "Negative = 100",
+                    "Neutral = 200",
+                    "Positive = 300"
+                ]
+            }
+            
+    """
     # Cargar el DataFrame desde la ruta del archivo.
     df = pd.read_parquet("Data/df_australian_user_reviews")
 
@@ -130,6 +212,20 @@ async def sentiment_analysis(empresa_desarrolladora: str):
 
 @app.get("/recomendacion_juego/{id_producto}")
 async def recomendacion_juego(id_producto: int):
+    """
+    Recibe un id de juego y devuelve las 5 recomendaciones más similares a un juego específico.
+
+        La respuesta a esta solicitud sería:
+            ```
+            [
+                "Recomendación 1: Elden Ring",
+                "Recomendación 2: God of War Ragnarök",
+                "Recomendación 3: Starfield",
+                "Recomendación 4: Horizon Forbidden West",
+                "Recomendación 5: Forza Horizon 5"
+            ]
+            
+    """
     # Lectura de los archivos necesarios
     df_similitud_del_coseno = pd.read_parquet("Data/similitud_del_coseno")
     indice = pd.read_csv("Data/indices_modelo")
