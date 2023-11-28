@@ -10,3 +10,4 @@ Este repositorio contiene un notebook equivalente al EDA, un notebook equivalent
 #### De igual forma en el vídeo explicativo mostramos los pasos para el correcto uso de la API.
 ## Recursos
 #### Link API en render: https://hans-pulido.onrender.com/docs
+#### Link al vídeo: https://drive.google.com/file/d/1X97lDtfcAqbSOK2WdeR5dhxoDgahvu0N/view?usp=sharing
